@@ -1,0 +1,28 @@
+Vagrant.configure("2") do |config|
+	config.vm.box = "centos/7"
+	config.vm.define "ouseqqamS" do |ouseqqamS|
+		ouseqqamS.vm.provider "virtualbox" do |v|
+			v.name = "ouseqqamS"
+			v.memory = 1024
+  			v.cpus = 1
+		end
+		ouseqqamS.vm.hostname = "ouseqqamS"
+		ouseqqamS.vm.network "private_network", ip: "192.168.42.110"
+		ouseqqamS.vm.provision "shell",
+		path: "master.sh"
+	end
+	config.trigger.after :up, :provision do |trigger|
+		trigger.run = {inline: "vagrant scp ouseqqamS:/var/lib/rancher/k3s/server/node-token ."}
+	end
+	config.vm.define "ouseqqamSW" do |ouseqqamSW|
+		ouseqqamSW.vm.provider "virtualbox" do |v|
+			v.name = "ouseqqamSW"
+			v.memory = 1024
+  			v.cpus = 1
+		end
+		ouseqqamSW.vm.hostname = "ouseqqamSW"
+		ouseqqamSW.vm.network "private_network", ip: "192.168.42.111"
+		ouseqqamSW.vm.provision "shell",
+		path: "agent.sh"
+	end
+end

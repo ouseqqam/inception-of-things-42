@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1-dep
+  labels:
+    app: app1
+    type: webPage
+spec:
+  template:
+    metadata:
+      name: app1-pod
+      labels:
+        app: app1
+        type: webPage
+    spec:
+      containers:
+      - name: app1
+        image: ouseqqam/app1:v2
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      app: app1
+      type: webPage
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2-dep
+  labels:
+    app: app2
+    type: webPage
+spec:
+  template:
+    metadata:
+      name: app2-pod
+      labels:
+        app: app2
+        type: webPage
+    spec:
+      containers:
+      - name: app1
+        image: ouseqqam/app2:v1
+        ports:
+        - containerPort: 80
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app2
+      type: webPage
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app3-dep
+  labels:
+    app: app3
+    type: webPage
+spec:
+  template:
+    metadata:
+      name: app3-pod
+      labels:
+        app: app3
+        type: webPage
+    spec:
+      containers:
+      - name: app3
+        image: ouseqqam/app3:v1
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      app: app3
+      type: webPage
